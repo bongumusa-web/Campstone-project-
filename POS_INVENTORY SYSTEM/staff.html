@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Staff - POS System</title>
+  <link rel="stylesheet" href="css code/products.css">
+  <link rel="stylesheet" href="css code/product_supplier_staff.css">
+</head>
+<body>
+
+  <!-- ===== SIDEBAR MENU ===== -->
+  <aside class="menu">
+    <h2>Menu</h2>
+    <ul>
+      <li><a href="main.html">POS</a></li>
+      <li><a href="dashboard.html">Dashboard</a></li>
+      <li><a href="products.html">Products</a></li>
+      <li><a href="supplier.html">Suppliers</a></li>
+      <li><a href="staff.html" class="active">Staff</a></li>
+      <li><a href="settings.html">Settings</a></li>
+      <li><a href="logout.html">Logout</a></li>
+    </ul>
+  </aside>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <main class="content">
+    <section class="table-section">
+      <h2>Staff List</h2>
+
+      <!-- Search & Filter -->
+      <div class="search-section">
+        <input type="text" id="search-staff" placeholder="Search by name...">
+        <select id="filter-role">
+          <option value="">All Roles</option>
+          <!-- dynamically updated -->
+        </select>
+      </div>
+
+      <!-- Staff Table -->
+      <table id="staff-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Salary (R)</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Input row for adding new staff -->
+          <tr id="input-row">
+            <td><input type="text" id="staff-name" placeholder="Name"></td>
+            <td><input type="email" id="staff-email" placeholder="Email"></td>
+            <td><input type="text" id="staff-role-input" placeholder="Role"></td>
+            <td><input type="number" id="staff-salary" placeholder="Salary"></td>
+            <td><button id="add-staff-btn">Add</button></td>
+          </tr>
+        </tbody>
+        <tbody id="staff-table-body">
+          <!-- Staff rows will appear here -->
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <script src="javascript_code/staff.js"></script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>POS</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="login-container">
+    <h1 id="storeName">Ztking</h1>
+    <p class="subtitle">Select your role</p>
+
+    <div class="role-buttons">
+        <button id="employeeBtn" class="role-btn employee">Employee</button>
+        <button id="adminBtn" class="role-btn admin">Admin</button>
+    </div>
+
+    <form id="employeeForm" class="login-form hidden">
+        <h2>Employee Login</h2>
+        <input type="text" placeholder="Username" required>
+        <input type="password" placeholder="Password" required>
+        <button type="submit" class="login-btn">Login</button>
+    </form>
+
+    <form id="adminForm" class="login-form hidden">
+        <h2>Admin Login</h2>
+        <input type="text" placeholder="Admin Name" required>
+        <input type="password" placeholder="Password" required>
+        <button type="submit" class="login-btn">Login</button>
+    </form>
+
+    <div class="theme-switcher">
+        <p>Choose Theme:</p>
+        <button class="theme-btn" data-theme="blue">Blue</button>
+        <button class="theme-btn" data-theme="teal">Teal</button>
+        <button class="theme-btn" data-theme="orange">Orange</button>
+        <button class="theme-btn" data-theme="White">White</button>
+    </div>
+</div>
+
+<script src="javascript_code/login.js"></script>
+</body>
+</html>
