@@ -135,25 +135,25 @@
 Here are some previews of the system (replace with your actual images later):
 
 ### 🔑 Login Page  
-![Login Page]()
+![Login Page](login.html)
 
 ### 🛒 POS Screen  
-![POS](images/pos.png)
+![POS](point_of_sales.html)
 
 ### 📊 Dashboard  
-![Dashboard](images)
+![Dashboard](dashboard.html)
 
 ### 📦 Products Page  
-![Products](images/products.png)
+![Products](product.html)
 
 ### 🚚 Suppliers Page  
-![Suppliers](images/suppliers.png)
+![Suppliers](supplier.html)
 
 ### 👥 Staff Page  
-![Staff](images/staff.png)
+![Staff](staff.html)
 
 ### ⚙️ Settings  
-![Settings](images/settings.png)
+![Settings](setting.html)
 
 ---
 
