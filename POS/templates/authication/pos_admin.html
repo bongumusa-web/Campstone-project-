@@ -1,0 +1,141 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>POS System - Superuser View</title>
+  <link rel="stylesheet" href="{% static 'css/pos.css' %}" />
+</head>
+<body>
+  <!-- ===== HEADER ===== -->
+  <header>
+    <nav class="top-nav">
+      <ul id="nav-links">
+        <li><a href="{% url 'pos' %}">POS</a></li>
+        <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+        <li><a href="#">Products</a></li>
+        <li><a href="#">Suppliers</a></li>
+        <li><a href="#">Staff</a></li>
+        <li><a href="#">Settings</a></li>
+        <li><a href="{% url 'logout' %}">Logout</a></li>
+      </ul>
+    </nav>
+
+    <h1>My Store POS</h1>
+    <div class="header-info">
+      <span id="cashier-name">Cashier: {{ first_name }}</span>
+      <span id="date-time"></span>
+    </div>
+  </header>
+
+    
+      <!-- ===== MAIN LAYOUT ===== -->
+  <main class="pos-container">
+   
+
+    <!-- ===== LEFT COLUMN: PRODUCTS ===== -->
+    <section class="products-column">
+      <div class="product-search">
+        <input type="text" placeholder="Search products..." />
+        <select>
+          <option>All Categories</option>
+          <option>Drinks</option>
+          <option>Wings</option>
+          <option>Kota</option>
+          <option>Fries</option>
+        </select>
+      </div>
+
+      <div class="products-grid">
+        <div class="product-tile" data-name="Egg" data-price="3">
+          <img src="images/egg.png" alt="Egg" />
+          <h3>Egg</h3>
+          <p class="price">R 3.00</p>
+        </div>
+
+        <div class="product-tile" data-name="Small Chips" data-price="20">
+          <img src="images/small_chips.png" alt="Small Chips" />
+          <h3>Small Chips</h3>
+          <p class="price">R 20.00</p>
+        </div>
+
+        <div class="product-tile" data-name="Full Chips" data-price="30">
+          <img src="images/full_chips.png" alt="Full Chips" />
+          <h3>Full Chips</h3>
+          <p class="price">R 30.00</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== MIDDLE COLUMN: CART ===== -->
+    <section class="cart-column">
+      <h2>Cart</h2>
+      <table class="cart-table">
+        <thead>
+          <tr>
+            <th>Qty</th>
+            <th>Item</th>
+            <th>Price</th>
+            <th>Total</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="cart-body"></tbody>
+      </table>
+
+      <div class="totals">
+        <p>Subtotal: <span id="subtotal">R0.00</span></p>
+        <p>VAT (15%): <span id="vat">R0.00</span></p>
+        <h3>Total: <span id="total">R0.00</span></h3>
+        <p>Change Due: <span id="change-due">R0.00</span></p>
+      </div>
+
+      <!-- Quantity Input & Cart Actions -->
+      <section class="cart-actions">
+        <div class="cart-controls">
+          <label for="quantity">Quantity:</label>
+          <input type="number" id="quantity" min="1" value="1" />
+          <button id="add-to-cart">Add to Cart</button>
+        </div>
+
+        <div class="cart-buttons">
+          <button class="cancel-btn" id="cancel-cart">Cancel</button>
+          <button class="complete-btn" id="complete-sale">Complete Sale</button>
+        </div>
+      </section>
+    </section>
+
+    <!-- ===== RIGHT COLUMN: PAYMENT & CALCULATOR ===== -->
+    <section class="payment-column">
+      <h2>Payment</h2>
+      <input type="text" id="amount-paid" readonly placeholder="Enter amount" />
+
+      <!-- Calculator -->
+      <div class="calculator">
+        <button class="operator" data-value="+">+</button>
+        <button data-value="7">7</button>
+        <button data-value="8">8</button>
+        <button data-value="9">9</button>
+
+        <button class="operator" data-value="/">/</button>
+        <button data-value="6">6</button>
+        <button data-value="5">5</button>
+        <button data-value="4">4</button>
+
+        <button class="operator" data-value="-">-</button>
+        <button data-value="3">3</button>
+        <button data-value="2">2</button>
+        <button data-value="1">1</button>
+
+        <button class="operator" data-value="*">*</button>
+        <button data-value="0">0</button>
+        <button data-value=".">.</button>
+        <button class="clear-btn" id="clear-amount">Clear</button>
+      </div>
+
+  </main>
+
+  <script src="{% static 'js/pos.js' %}"></script>
+</body>
+</html>

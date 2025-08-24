@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: lightblue;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* full screen center */
+        }
+
+        .container {
+            background: white;
+            padding: 30px 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            margin: 20px;
+        }
+
+        h1 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        p {
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            text-align: left;
+            margin: 8px 0 4px;
+            font-weight: bold;
+            color: #444;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .messages {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .messages li {
+            padding: 8px;
+            border-radius: 5px;
+            margin: 5px 0;
+            list-style: none;
+        }
+
+        .messages .success { background: #d4edda; color: #155724; }
+        .messages .error { background: #f8d7da; color: #721c24; }
+
+        .links {
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        .links a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Register</h1>
+        <p>Please fill in the details below to create an account.</p>
+
+        <!-- Django messages -->
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li class="{{ message.tags }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <!-- Registration form -->
+        <form action="{% url 'register' %}" method="post">
+            {% csrf_token %}
+            
+            <label for="first_name">First Name:</label>
+            <input id="first_name" type="text" name="first_name" placeholder="First Name" required>
+
+            <label for="last_name">Last Name:</label>
+            <input id="last_name" type="text" name="last_name" placeholder="Last Name" required>
+
+           
+            <label for="username">Username:</label>
+            <input id="username" type="text" name="username" placeholder="Username" required>
+
+            <label for="email">Email:</label>
+            <input id="email" type="email" name="email" placeholder="Email" required>
+
+            <label for="password">Password:</label>
+            <input id="pass1" type="password" name="password" placeholder="Password" required>
+
+            <label for="confirm_password">Confirm Password:</label>
+            <input id="pass2" type="password" name="confirm_password" placeholder="Confirm Password" required>
+
+            <button type="submit">Register</button>
+        </form>
+
+        <div class="links">
+            <p>Already have an account? <a href="{% url 'login' %}">Login here</a>.</p>
+            <p>Go back to <a href="{% url 'dashboard' %}">Dashboard</a>.</p>
+        </div>
+    </div>
+</body>
+</html>

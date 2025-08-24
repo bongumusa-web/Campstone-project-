@@ -1,0 +1,94 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Suppliers - POS System</title>
+  <link rel="stylesheet" href="{% static 'css/product.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body>
+
+<header id="header">
+  <button id="menu-toggle"><i class="fa fa-bars"></i></button>
+  <ul>
+    <li><i class="fa-solid fa-truck"></i> Suppliers</li>
+    <li>Welcome, {{ user.username }}</li>
+  </ul>
+</header>
+
+<main class="container">
+  <!-- SIDEBAR MENU -->
+  <aside class="menu">
+    <h2>Menu</h2>
+    <ul>
+      <li><a href="{% url 'pos' %}"><i class="fa-solid fa-cash-register"></i> POS</a></li>
+      <li><a href="{% url 'dashboard' %}"><i class="fa-solid fa-chart-line"></i> Dashboard</a></li>
+      <li><a href="{% url 'product:product' %}"><i class="fa-solid fa-boxes-stacked"></i> Products</a></li>
+      <li class="active"><a href="{% url 'supplier:supplier_page' %}"><i class="fa-solid fa-truck"></i> Suppliers</a></li>
+      <li><a href="{% url 'register' %}"><i class="fa-solid fa-gear"></i> Register</a></li>
+      <li><a href="{% url 'logout' %}"><i class="fa-solid fa-sign-out-alt"></i> Logout</a></li>
+    </ul>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <section class="content">
+    <section class="table-section">
+      <h2>Suppliers List</h2>
+
+      <!-- Search & Filter -->
+      <div class="search-section">
+        <input type="text" id="search-supplier" placeholder="Search by name...">
+        <select id="filter-category">
+          <option value="">All Categories</option>
+        </select>
+      </div>
+
+      <!-- Suppliers Table -->
+      <table id="suppliers-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Contact</th>
+            <th>Address</th>
+            <th>Email</th>
+            <th>Product</th>
+            <th>Stock Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Input row for adding new supplier -->
+          <tr id="input-row">
+            <td><input type="text" id="supplier-name" placeholder="Name"></td>
+            <td><input type="text" id="supplier-category" placeholder="Category"></td>
+            <td><input type="text" id="supplier-contact" placeholder="Contact"></td>
+            <td><input type="text" id="supplier-address" placeholder="Address"></td>
+            <td><input type="text" id="supplier-email" placeholder="Email"></td>
+            <td><input type="text" id="supplier-product" placeholder="Product"></td>
+            <td><input type="text" id="supplier-stock" placeholder="Stock Price"></td>
+            <td><input type="text" id="supplier-quantity" placeholder="Quantity"></td>
+            <td><input type="text" id="supplier-total" placeholder="Total"></td>
+            <td><button id="add-supplier-btn">Add</button></td>
+          </tr>
+        </tbody>
+        <tbody id="suppliers-table-body">
+          <!-- dynamic supplier rows will be added here -->
+        </tbody>
+      </table>
+    </section>
+  </section>
+</main>
+
+<script src="{% static 'js/supplier.js' %}"></script>
+<script>
+  document.getElementById('menu-toggle').addEventListener('click', () => {
+    document.querySelector('.menu').classList.toggle('active');
+  });
+</script>
+</body>
+</html>
