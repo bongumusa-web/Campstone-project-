@@ -1,164 +1,89 @@
-# Point of Sale + Inventory System
+Ztkings POS System
 
-**By:** Bongumusa Gumede  
+A web-based Point of Sale (POS) + invetory system built with Django for inventory, sales, and supplier management.
 
----
+Features
+User Management
 
-## Project Layout
+Superuser login & dashboard
 
-### 🛒 Point of Sale (POS)
-- **Header / Menu Sidebar**
-- **Products by Category**: Displayed as  
-  - Image (top)  
-  - Product Name  
-  - Product Price  
-- **Cart**: For purchased products  
-  - Slip (receipt preview)  
-  - Quantity input  
-  - Add button  
-  - Cancel button  
-  - Complete button  
-- **Payment Section**  
-  - Calculator  
-  - Payment gateway buttons: **Cash**, **FET**, **Card**  
-  - Receipt options: **Print** & **Email**  
+Staff registration & login
 
----
+Role-based access control
 
-### 📊 Dashboard
-- **Menu Sidebar**
-- **Right Section**  
-  - Total Sales  
-  - Total Stock  
-  - Low Stock Alerts  
-  - Most Sold Product  
-- **Charts**  
-  - Bar Graph: Sales (Weekly, Monthly, Yearly)  
-  - Pie Chart: Top Products  
-- **Bottom Section**  
-  - Recent Sales (Date, Cashier, Total)  
-  - Notifications  
+Point of Sale (Cashier)
 
----
+Product selection with stock validation
 
-### 📦 Product Management
-- **Sidebar Menu**
-- **Product List**
-  - Search with category filter  
-  - Table:
-    - Name  
-    - Category  
-    - Price  
-    - Stock  
-    - Image/Image Link  
-    - Actions (**Add / Delete**)  
+Real-time receipt generation
 
----
+Cash & card payments with VAT calculation
 
-### 🚚 Supplier Management
-- **Similar to Product**, but with different table fields:  
-  - Name  
-  - Category  
-  - Contact  
-  - Email  
-  - Actions (**Add / Delete**)  
+Cancel & complete sales
 
----
+Product & Supplier Management
 
-### 👥 Staff Management
-- **Similar to Product**, but with different table fields:  
-  - Name  
-  - Email  
-  - Role  
-  - Salary  
-  - Actions (**Add / Delete**)  
+Add, edit, delete products
 
----
+Manage stock levels
 
-### ⚙️ Settings
-- Change Password  
-- Default Currency / Change Currency  
-- Change Language  
-- Low Stock Alert Settings (separate section, each with its own Save button)  
+Add suppliers and supplier products
 
----
+Search and filter products
 
-### 🔑 Authentication
-- **Login Page**: Select user role (Admin / Employee).  
-- If **Admin (Superuser)** → Redirect to **Dashboard**.  
-- If **Employee (Cashier)** → Redirect to **POS**.  
+Dashboard & Analytics
 
----
+Total sales, total stock, low stock alerts, most sold product
 
-### 🛂 Permissions
-- **Employee (Cashier)**  
-  - Can **only** access POS  
-  - Cannot access Dashboard, Products, Suppliers, or Settings  
-  - Can **Logout** (redirected back to Login page)  
+Interactive charts using Chart.js
 
-- **Admin (Superuser)**  
-  - Has access to **all sections**  
+Recent sales table and notifications
 
----
+Technologies Used
 
-## ✅ Features
+Backend: Python, Django, Django REST Framework
 
-### POS
-- Print and Email receipts  
-- Select products by category  
+Frontend: HTML, CSS, JavaScript
 
-### Dashboard
-- Bar Graph: Sales over Week, Month, Year  
-- Pie Chart: Most sold products  
-- Recent Sales Table: Shows Date, Cashier, Total  
+Charts & Icons: Chart.js, Font Awesome
 
-### Product / Supplier / Staff
-- Full **CRUD** functionality  
+Database: SQLite (default) / Django ORM
 
-### Settings
-- Manage system preferences (passwords, currency, language, alerts)  
+Installation
 
----
+Clone the repository:
 
-## 🛠️ Tech Stack
-- **Frontend**: HTML, CSS, JavaScript  
-- **Backend**: Django + Django REST Framework  
-- **Other**:  
-  - Internationalization (languages, currency)  
-  - Email support (for receipts)  
-  - Print support (receipts)  
+git clone <repo_url>
+cd pos
 
----
 
-## 📸 Screenshots
+Create and activate a virtual environment:
 
-Here are some previews of the system (replace with your actual images later):
+python -m venv env
+source env/bin/activate  # Linux/Mac
+env\Scripts\activate     # Windows
 
-### 🔑 Login Page  
-![Login Page](login.html)
 
-### 🛒 POS Screen  
-![POS](point_of_sales.html)
+Install dependencies:
 
-### 📊 Dashboard  
-![Dashboard](dashboard.html)
+pip install -r requirements.txt
 
-### 📦 Products Page  
-![Products](product.html)
 
-### 🚚 Suppliers Page  
-![Suppliers](supplier.html)
+Apply migrations:
 
-### 👥 Staff Page  
-![Staff](staff.html)
+python manage.py migrate
 
-### ⚙️ Settings  
-![Settings](setting.html)
 
----
+Create a superuser:
 
-## 🚀 Setup & Run
-1. Clone this repo:  
-   ```bash
-   git clone https://github.com/yourusername/point-of-sale-inventory.git
-   cd point-of-sale-inventory
+python manage.py createsuperuser
+
+
+Run the server:
+
+python manage.py runserver
+
+
+Access the app at:
+
+http://127.0.0.1:8000/

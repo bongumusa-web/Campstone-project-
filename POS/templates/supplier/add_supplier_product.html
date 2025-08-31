@@ -1,0 +1,84 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Supplier Product</title>
+  <link rel="stylesheet" href="{% static 'css/product.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+<header id="header">
+  <button id="menu-toggle"><i class="fa fa-bars"></i></button>
+  <ul>
+    <li><i class="fa-solid fa-box"></i> Supplier Products</li>
+    <li>Welcome, {{ user.username }}</li>
+  </ul>
+</header>
+
+<main class="container">
+  <aside class="menu">
+    <h2>Menu</h2>
+    <ul>
+      <li><a href="{% url 'supplier:supplier_page' %}"><i class="fa fa-truck"></i> Suppliers</a></li>
+      <li><a href="{% url 'supplier:add_supplier_product' %}" class="active"><i class="fa fa-plus"></i> Add Supplier Product</a></li>
+    </ul>
+  </aside>
+
+  <section class="content">
+    <h1>Add Supplier Product</h1>
+
+    <!-- SEARCH -->
+    <div class="search">
+      <input type="text" id="search-product" placeholder="Search by product name">
+      <button id="search-btn">Search</button>
+    </div>
+
+    <!-- TABLE -->
+    <table id="supplier-product-table">
+      <thead>
+        <tr>
+          <th>Supplier</th>
+          <th>Product Name</th>
+          <th>Category</th>
+          <th>Cost Price</th>
+          <th>Quantity</th>
+          <th>Total</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- INPUT ROW -->
+        <tr class="add-row">
+          <td>
+            <select id="new-supplier">
+              <option value="">Select Supplier</option>
+              <!-- Options will be fetched via JS -->
+            </select>
+          </td>
+          <td><input type="text" id="new-product" placeholder="Product Name"></td>
+          <td>
+            <select id="new-category">
+              <option value="">Select Category</option>
+              <option value="Consumable">Consumable</option>
+              <option value="Mass Product">Mass Product</option>
+              <option value="Quantity Product">Quantity Product</option>
+              <option value="Normal Product">Normal Product</option>
+            </select>
+          </td>
+          <td><input type="number" id="new-cost" step="0.01"></td>
+          <td><input type="number" id="new-qty" step="1"></td>
+          <td><input type="text" id="new-total" disabled></td>
+          <td><button id="add-product-btn">Add</button></td>
+        </tr>
+
+        <!-- Existing supplier products appended here by JS -->
+      </tbody>
+    </table>
+  </section>
+</main>
+
+<script src="{% static 'js/add_supplier_product.js' %}"></script>
+</body>
+</html>

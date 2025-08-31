@@ -36,6 +36,9 @@ urlpatterns = [
     path('', include('authication.urls')),  # your app URLs
     path('products/', include('product.urls', namespace='product')),  # product app
     path('suppliers/', include('supplier.urls', namespace='supplier')),  # supplier app
+    #path('pos/', include('point_of_sales.urls', namespace='point_of_sales')),  # point_of_sale app
+    path('api/pos/', include('point_of_sales.urls')),
+
 ]
 
 

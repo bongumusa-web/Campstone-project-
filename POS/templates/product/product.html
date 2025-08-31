@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Products - Ztkings</title>
+  <title>Products Dashboard</title>
   <link rel="stylesheet" href="{% static 'css/product.css' %}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
@@ -19,60 +19,68 @@
 </header>
 
 <main class="container">
-  <!-- SIDEBAR MENU -->
+  <!-- Sidebar Menu -->
   <aside class="menu">
     <h2>Menu</h2>
     <ul>
       <li><a href="{% url 'pos' %}"><i class="fa-solid fa-cash-register"></i> POS</a></li>
-        <li class="active"><a href="{% url 'dashboard' %}"><i class="fa-solid fa-chart-line"></i> Dashboard</a></li>
-        <li><a href="{% url 'product:product' %}"><i class="fa-solid fa-boxes-stacked"></i> Products</a></li>
-        <li><a href="{% url 'supplier:supplier_page' %}"><i class="fa-solid fa-truck"></i> Suppliers</a></li>
-        <li><a href="{% url 'register' %}"><i class="fa-solid fa-gear"></i> Register</a></li>
+      <li class="active"><a href="{% url 'dashboard' %}"><i class="fa-solid fa-chart-line"></i> Dashboard</a></li>
+      <li><a href="{% url 'product:add_product' %}"><i class="fa fa-plus"></i> Add Product</a></li>
+      <li><a href="{% url 'supplier:supplier_page' %}"><i class="fa-solid fa-truck"></i> Suppliers</a></li>
+      {% if user.is_authenticated %}
         <li><a href="{% url 'logout' %}"><i class="fa-solid fa-sign-out-alt"></i> Logout</a></li>
+      {% else %}
         <li><a href="{% url 'login' %}"><i class="fa-solid fa-user"></i> Login</a></li>
-      </ul>
+      {% endif %}
     </ul>
   </aside>
 
-  <!-- MAIN CONTENT -->
+  <!-- Main Content -->
   <section class="content">
-    <section class="table-section">
-      <h2>Products List</h2>
+    <h1>Products Dashboard</h1>
 
-      <!-- Search & Filter -->
+    <!-- Action Buttons -->
+    <div class="section-buttons">
+      <a href="{% url 'product:add_product' %}" class="btn"><i class="fa fa-plus"></i> Add Product</a>
+      
+    </div>
+
+    <!-- Unified Table -->
+    <section class="table-section">
+      <h2>All Products</h2>
+
       <div class="search-section">
-        <input type="text" id="search-product" placeholder="Search by name...">
-        <select id="filter-category">
-          <option value="">All Categories</option>
-          <!-- dynamically updated -->
-        </select>
+        <input type="text" id="search-item" placeholder="Search by product name...">
       </div>
 
-      <!-- Products Table -->
-      <table id="products-table">
+      <table id="all-items-table">
         <thead>
           <tr>
             <th>Image</th>
-            <th>Name</th>
+            <th>Product Name</th>
             <th>Category</th>
             <th>Price (R)</th>
             <th>Stock</th>
-            <th>Actions</th>
+            <th>Stock Price</th>
+            <th>Unit</th>
+            <th>Type</th>
           </tr>
         </thead>
         <tbody>
-          <!-- Input row for adding new product -->
-          <tr id="input-row">
-            <td><input type="file" id="product-image" accept="image/*"></td>
-            <td><input type="text" id="product-name" placeholder="Name"></td>
-            <td><input type="text" id="product-category" placeholder="Category"></td>
-            <td><input type="number" id="product-price" placeholder="Price" min="0" step="0.01"></td>
-            <td><input type="number" id="product-stock" placeholder="Stock" min="0"></td>
-            <td><button id="add-product-btn">Add</button></td>
+          {% for product in products %}
+          <tr data-id="{{ product.id }}">
+            <td>{% if product.image %}<img src="{{ product.image.url }}" width="50">{% endif %}</td>
+            <td>{{ product.supplier_product.product_name }}</td>
+            <td>{{ product.category.name }}</td>
+            <td>{{ product.selling_price }}</td>
+            <td>{{ product.supplier_product.quantity_purchased }}</td>
+            <td>{{ product.supplier_product.cost_price }}</td>
+            <td>{{ product.unit }}</td>
+            <td>Product</td>
           </tr>
-        </tbody>
-        <tbody id="products-table-body">
-          <!-- Product rows will be added here dynamically by JS -->
+          {% empty %}
+          <tr><td colspan="8">No products found.</td></tr>
+          {% endfor %}
         </tbody>
       </table>
     </section>
@@ -80,7 +88,5 @@
 </main>
 
 <script src="{% static 'js/product.js' %}"></script>
-
-
 </body>
 </html>

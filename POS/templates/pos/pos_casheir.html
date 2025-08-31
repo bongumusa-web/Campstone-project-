@@ -1,0 +1,252 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>POS System</title>
+<link rel="stylesheet" href="{% static 'css/pos.css' %}">
+
+</head>
+
+<body>
+
+<header class="pos-header">
+    <div class="cashier-name">Cashier: {{ request.user.username }}</div>
+    <div class="datetime" id="datetime">--:--</div>
+    <button id="logout"><a href="{% url 'logout' %}">Logout</a></button>
+</header>
+
+<div class="main">
+
+  <div class="left-panel">
+    <div class="search-bar">
+      <input type="text" id="category-search" placeholder="Search by category or product">
+    </div>
+
+    <div class="products-grid" id="products-grid">
+      {% for product in products %}
+      <div class="product-box" 
+           data-id="{{ product.id }}" 
+           data-name="{{ product.supplier_product.product_name }}" 
+           data-price="{{ product.selling_price }}" 
+           data-stock-price="{{ product.stock_price }}">
+        <div class="product-name">
+          {% if product.image %}<img src="{{ product.image.url }}" width="50">{% endif %}<br>
+          {{ product.supplier_product.product_name }}
+        </div>
+        <div class="product-price">R{{ product.selling_price }}</div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="right-panel">
+    <div class="receipt-header">
+      <h1>Receipt</h1>
+      <div id="shop-name">Ztkings</div>
+    </div>
+
+    <table class="receipt-table">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Quantity</th>
+          <th>Price</th>
+        </tr>
+      </thead>
+      <tbody id="receipt-body"></tbody>
+    </table>
+
+    <div class="totals">
+      <div><span>Total</span><span id="total">R0.00</span></div>
+      <div><span>Vat (15%)</span><span id="vat">R0.00</span></div>
+      <div><span>Amount Paid</span><span id="paid">R0.00</span></div>
+      <div><span>Change</span><span id="change">R0.00</span></div>
+      <div><span>Cashier</span><span id="receipt-cashier">{{ request.user.username }}</span></div>
+      <div><span>Date & Time</span><span id="receipt-datetime">--:--</span></div>
+      <div>Goodbye!!!</div>
+    </div>
+
+    <div class="actions">
+      <button class="complete">Complete</button>
+      <button class="cancel">Cancel</button>
+      <button class="cash">Cash</button>
+      <button class="card">Card</button>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const products = document.querySelectorAll(".product-box");
+  const receiptBody = document.getElementById("receipt-body");
+  const totalEl = document.getElementById("total");
+  const vatEl = document.getElementById("vat");
+  const paidEl = document.getElementById("paid");
+  const changeEl = document.getElementById("change");
+
+  let cart = [];
+
+  // Add product to cart
+  products.forEach(product => {
+    product.addEventListener("click", () => {
+      const id = product.dataset.id;
+      const name = product.dataset.name;
+      const price = parseFloat(product.dataset.price);
+      const stock = parseInt(product.dataset.stock); // <-- stock from backend
+
+      const existing = cart.find(item => item.id === id);
+      if (existing) {
+        if (existing.quantity + 1 > stock) {
+          alert(`Cannot add more than ${stock} units of ${name}`);
+          return;
+        }
+        existing.quantity += 1;
+      } else {
+        if (stock < 1) {
+          alert(`${name} is out of stock!`);
+          return;
+        }
+        cart.push({ id, name, price, quantity: 1, stock: stock });
+      }
+
+      renderCart();
+    });
+  });
+
+  function renderCart() {
+    receiptBody.innerHTML = "";
+    let total = 0;
+    cart.forEach(item => {
+      const row = document.createElement("tr");
+      const subtotal = item.price * item.quantity;
+      total += subtotal;
+      row.innerHTML = `
+        <td>${item.name}</td>
+        <td>${item.quantity}</td>
+        <td>R${subtotal.toFixed(2)}</td>
+      `;
+      receiptBody.appendChild(row);
+    });
+
+    totalEl.textContent = `R${total.toFixed(2)}`;
+    vatEl.textContent = `R${(total * 0.15).toFixed(2)}`;
+    paidEl.textContent = `R0.00`;
+    changeEl.textContent = `R0.00`;
+    document.getElementById("receipt-datetime").textContent = new Date().toLocaleString();
+  }
+
+  // Cash Payment
+  document.querySelector(".cash").addEventListener("click", () => {
+    if (cart.length === 0) {
+      alert("Add products to the cart first!");
+      return;
+    }
+    const total = parseFloat(totalEl.textContent.replace("R", ""));
+    let amountPaid = prompt(`Enter cash amount paid (Total: R${total.toFixed(2)})`, total.toFixed(2));
+    amountPaid = parseFloat(amountPaid);
+    if (isNaN(amountPaid) || amountPaid < total) {
+      alert("Invalid amount! Amount paid must be at least the total.");
+      return;
+    }
+    paidEl.textContent = `R${amountPaid.toFixed(2)}`;
+    changeEl.textContent = `R${(amountPaid - total).toFixed(2)}`;
+  });
+
+  // Card Payment
+  document.querySelector(".card").addEventListener("click", () => {
+    if (cart.length === 0) {
+      alert("Add products to the cart first!");
+      return;
+    }
+    const total = parseFloat(totalEl.textContent.replace("R", ""));
+    paidEl.textContent = `R${total.toFixed(2)}`;
+    changeEl.textContent = `R0.00`;
+  });
+
+  // Cancel Sale
+  document.querySelector(".cancel").addEventListener("click", () => {
+    if (!confirm("Are you sure you want to cancel this sale?")) return;
+    cart = [];
+    renderCart();
+  });
+
+  // Complete Sale & send to API
+  document.querySelector(".complete").addEventListener("click", async () => {
+    if (cart.length === 0) {
+      alert("No products in cart!");
+      return;
+    }
+
+    const total = parseFloat(totalEl.textContent.replace("R", ""));
+    const paid = parseFloat(paidEl.textContent.replace("R", ""));
+    if (paid < total) {
+      alert("Customer has not paid enough!");
+      return;
+    }
+
+    const items = cart.map(item => ({
+      product: item.id,
+      product_name: item.name,
+      quantity: item.quantity,
+      selling_price: item.price,
+      stock_price: 0, // backend will calculate from Product model
+      profit: 0        // backend calculates profit
+    }));
+
+    const payload = {
+      cashier: "{{ request.user.id }}",
+      total: total,
+      payment_method: paid === total ? "card" : "cash",
+      profit: 0, // backend calculates
+      items: items
+    };
+
+    try {
+      const response = await fetch("/api/pos/sales/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": getCookie("csrftoken")
+        },
+        body: JSON.stringify(payload)
+      });
+
+      if (response.ok) {
+        alert("Sale completed successfully!");
+        cart = [];
+        renderCart();
+      } else {
+        const err = await response.json();
+        console.error(err);
+        alert("Error saving sale! See console for details.");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Network error while saving sale!");
+    }
+  });
+
+  // CSRF helper
+  function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== "") {
+      const cookies = document.cookie.split(";");
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.substring(0, name.length + 1) === name + "=") {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
+      }
+    }
+    return cookieValue;
+  }
+});
+
+
+</script>
+
+</body>
+</html>

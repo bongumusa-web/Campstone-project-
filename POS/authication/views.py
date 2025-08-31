@@ -3,8 +3,11 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from .forms import SuperUserCreationForm
 from django.utils.http import url_has_allowed_host_and_scheme
+
+from .forms import SuperUserCreationForm
+from product.models import Product   #  import your Product model
+
 
 # --------------------------------------
 # INITIAL SUPERUSER SETUP
@@ -39,6 +42,7 @@ def dashboard_view(request):
     if not request.user.is_superuser:
         messages.error(request, "Access denied! Only superusers allowed.")
         return redirect('pos')
+    
     return render(request, "authication/dashboard.html", {"first_name": request.user.first_name})
 
 
@@ -51,7 +55,18 @@ def pos_view(request):
     if request.user.is_superuser:
         messages.info(request, "Superusers must use the dashboard.")
         return redirect('dashboard')
-    return render(request, "authication/pos_casheir.html", {"first_name": request.user.first_name})
+
+    # Fetch products to display on POS
+    product = Product.objects.all()
+
+    return render(
+        request,
+        "pos/pos_casheir.html",
+        {
+            "first_name": request.user.first_name,
+            "products": product,   #  Pass products into template
+        }
+    )
 
 
 # --------------------------------------

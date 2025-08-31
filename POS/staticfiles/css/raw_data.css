@@ -1,0 +1,93 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f6f8;
+    margin: 0;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #4e73df;
+    color: white;
+    padding: 10px 20px;
+}
+
+header ul {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+}
+
+header ul li a {
+    color: white;
+    text-decoration: none;
+    padding: 5px;
+}
+
+header ul li a.active {
+    background: #34495e;
+    border-radius: 4px;
+}
+
+.container {
+    padding: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background: #f0f0f0;
+}
+
+tr:nth-child(even) {
+    background: #fafafa;
+}
+
+input, select {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 4px;
+}
+
+button {
+    padding: 5px 10px;
+    margin: 2px;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+}
+
+button.save-btn {
+    background: #4CAF50;
+    color: white;
+}
+
+button.edit-btn {
+    background: #FF9800;
+    color: white;
+}
+
+button.delete-btn {
+    background: #F44336;
+    color: white;
+}
+
+@media (max-width: 767px) {
+    table, th, td {
+        font-size: 12px;
+    }
+    input, select {
+        font-size: 12px;
+    }
+}

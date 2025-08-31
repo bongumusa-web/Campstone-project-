@@ -1,0 +1,58 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add Supplier</title>
+  <link rel="stylesheet" href="{% static 'css/product.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+<header id="header">
+  <button id="menu-toggle"><i class="fa fa-bars"></i></button>
+  <ul>
+    <li><i class="fa-solid fa-truck"></i> Suppliers</li>
+    <li>Welcome, {{ user.username }}</li>
+  </ul>
+</header>
+
+<main class="container">
+  <aside class="menu">
+    <h2>Menu</h2>
+    <ul>
+      <li><a href="{% url 'supplier:supplier_page' %}" class="active"><i class="fa fa-truck"></i> Suppliers</a></li>
+      <li><a href="{% url 'supplier:add_supplier_product' %}"><i class="fa fa-plus"></i> Add Supplier Product</a></li>
+    </ul>
+  </aside>
+
+  <section class="content">
+    <h1>Add Supplier</h1>
+    <table id="supplier-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Contact</th>
+          <th>Email</th>
+          <th>Address</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Input row for adding new supplier -->
+        <tr class="add-row">
+          <td><input type="text" id="new-name" placeholder="Name"></td>
+          <td><input type="text" id="new-contact" placeholder="Contact"></td>
+          <td><input type="email" id="new-email" placeholder="Email"></td>
+          <td><input type="text" id="new-address" placeholder="Address"></td>
+          <td><button id="add-supplier-btn">Add</button></td>
+        </tr>
+        <!-- Existing suppliers will be appended here by JS -->
+      </tbody>
+    </table>
+  </section>
+</main>
+
+<script src="{% static 'js/add_supplier.js' %}"></script>
+</body>
+</html>

@@ -11,195 +11,64 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <style>
-   
     /* ===== General Reset ===== */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f6f8;
-      color: #333;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: Arial, sans-serif; background: #f4f6f8; color: #333; }
 
     /* ===== Header ===== */
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: #4e73df;
-      color: white;
-      padding: 10px 20px;
-    }
-
-    header ul {
-      list-style: none;
-      display: flex;
-      gap: 15px;
-    }
-
-    header #menu-toggle {
-      background: none;
-      border: none;
-      color: white;
-      font-size: 20px;
-    }
+    header { display: flex; justify-content: space-between; align-items: center; background: #4e73df; color: white; padding: 10px 20px; }
+    header ul { list-style: none; display: flex; gap: 15px; }
+    header #menu-toggle { background: none; border: none; color: white; font-size: 20px; }
 
     /* ===== Layout ===== */
-    .container {
-      display: flex;
-      min-height: calc(100vh - 50px);
-    }
+    .container { display: flex; min-height: calc(100vh - 50px); }
 
     /* Sidebar */
-    .menu {
-      background: #2c3e50;
-      color: white;
-      padding: 20px;
-      width: 220px;
-    }
-
-    .menu h2 {
-      margin-bottom: 20px;
-    }
-
-    .menu_list {
-      list-style: none;
-    }
-
-    .menu_list li {
-      padding: 10px 0;
-      cursor: pointer;
-    }
-
-    .menu_list li a {
-      text-decoration: none;
-      color: white;
-    }
-
-    .menu_list li.active {
-      background: #34495e;
-    }
+    .menu { background: #2c3e50; color: white; padding: 20px; width: 220px; }
+    .menu h2 { margin-bottom: 20px; }
+    .menu_list { list-style: none; }
+    .menu_list li { padding: 10px 0; cursor: pointer; }
+    .menu_list li a { text-decoration: none; color: white; }
+    .menu_list li.active { background: #34495e; }
 
     /* Dashboard Content */
-    .dashboard {
-      flex: 1;
-      padding: 20px;
-    }
+    .dashboard { flex: 1; padding: 20px; }
 
     /* Info Boxes */
-    .info-boxes {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 20px;
-    }
-
-    .info-boxes .box {
-      background: white;
-      padding: 15px;
-      border-radius: 8px;
-      text-align: center;
-    }
-
+    .info-boxes { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px; }
+    .info-boxes .box { background: white; padding: 15px; border-radius: 8px; text-align: center; }
     .total-sales { border-left: 5px solid #4e73df; }
     .total-stock { border-left: 5px solid #1cc88a; }
     .low-stock { border-left: 5px solid #e74a3b; }
     .most-sold { border-left: 5px solid #f6c23e; }
 
     /* Charts */
-    .charts-container {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-      margin-top: 20px;
-    }
+    .charts-container { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
+    .chart-box { background: white; padding: 25px; border-radius: 8px; width: 550px; }
+    .chart-header { display: flex; justify-content: space-between; align-items: center; }
+    .chart-header select { padding: 4px 8px; border-radius: 5px; border: 1px solid #ccc; }
 
-    .chart-box {
-      background: white;
-      padding: 25px;
-      border-radius: 8px;
-      width: 550px;
-    }
-
-    .chart-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .chart-header select {
-      padding: 4px 8px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-    }
-
-    @media (max-width: 992px) {
-      .charts-container {
-        grid-template-columns: 1fr;
-      }
-    }
+    @media (max-width: 992px) { .charts-container { grid-template-columns: 1fr; } }
 
     /* Bottom Section */
-    .bottom-section {
-      display: flex;
-      gap: 20px;
-      margin-top: 20px;
-    }
-
-    .bottom-section > div {
-      background: white;
-      padding: 15px;
-      border-radius: 8px;
-      flex: 1;
-    }
-
-    .recent-sales table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    .recent-sales th, .recent-sales td {
-      padding: 8px;
-      border-bottom: 1px solid #ddd;
-    }
+    .bottom-section { display: flex; gap: 20px; margin-top: 20px; }
+    .bottom-section > div { background: white; padding: 15px; border-radius: 8px; flex: 1; }
+    .recent-sales table { width: 100%; border-collapse: collapse; }
+    .recent-sales th, .recent-sales td { padding: 8px; border-bottom: 1px solid #ddd; }
 
     /* Footer */
-    .footer {
-      text-align: center;
-      padding: 10px;
-      background: #4e73df;
-      color: white;
-    }
+    .footer { text-align: center; padding: 10px; background: #4e73df; color: white; }
 
     /* ===== Responsive ===== */
     @media (max-width: 768px) {
-      .container {
-        flex-direction: column;
-      }
-
-      .menu {
-        display: none;
-        width: 100%;
-      }
-
-      .menu.active {
-        display: block;
-      }
-
-      .charts-container {
-        grid-template-columns: 1fr;
-      }
-
-      .bottom-section {
-        flex-direction: column;
-      }
+      .container { flex-direction: column; }
+      .menu { display: none; width: 100%; }
+      .menu.active { display: block; }
+      .charts-container { grid-template-columns: 1fr; }
+      .bottom-section { flex-direction: column; }
     }
   </style>
 </head>
-
 <body>
 
   <!-- ===== HEADER ===== -->
@@ -209,63 +78,51 @@
       <li><i class="fa-solid fa-money-bills"></i> Dashboard</li>
       <li id="date"></li>
       <li id="time"></li>
-      <li>Welcome, {{ user.username }}</li>
+      <li>Welcome, {{ username }}</li>
     </ul>
   </header>
 
   <main class="container">
-
     <!-- ===== SIDEBAR ===== -->
     <aside class="menu">
       <h2>Menu</h2>
       <ul class="menu_list">
-        <li><a href="#"><i class="fa-solid fa-cash-register"></i> POS</a></li>
         <li class="active"><a href="{% url 'dashboard' %}"><i class="fa-solid fa-chart-line"></i> Dashboard</a></li>
         <li><a href="{% url 'product:product' %}"><i class="fa-solid fa-boxes-stacked"></i> Products</a></li>
         <li><a href="{% url 'supplier:supplier_page' %}"><i class="fa-solid fa-truck"></i> Suppliers</a></li>
         <li><a href="{% url 'register' %}"><i class="fa-solid fa-gear"></i> Register</a></li>
         <li><a href="{% url 'logout' %}"><i class="fa-solid fa-sign-out-alt"></i> Logout</a></li>
-        <li><a href="{% url 'login' %}"><i class="fa-solid fa-user"></i> Login</a></li>
       </ul>
     </aside>
 
     <!-- ===== DASHBOARD CONTENT ===== -->
     <section class="dashboard">
-
       <!-- Info Boxes -->
       <div class="info-boxes">
         <div class="box total-sales">
           <h3>Total Sales</h3>
-          <p>R 12,500</p>
+          <p id="total-sales">R 0.00</p>
         </div>
         <div class="box total-stock">
           <h3>Total Stock</h3>
-          <p>2,350 items</p>
+          <p id="total-stock">0 items</p>
         </div>
         <div class="box low-stock">
           <h3>Low Stock Alerts</h3>
-          <p>5 items</p>
+          <p id="low-stock">0 items</p>
         </div>
         <div class="box most-sold">
           <h3>Most Sold</h3>
-          <p>Product A</p>
+          <p id="most-sold">-</p>
         </div>
       </div>
 
       <!-- Charts -->
       <div class="charts-container">
         <div class="chart-box">
-          <div class="chart-header">
-            <h3>Sales Over Time</h3>
-            <select id="sales-filter">
-              <option value="week">This Week</option>
-              <option value="month">This Month</option>
-              <option value="year">This Year</option>
-            </select>
-          </div>
+          <h3>Sales Over Time</h3>
           <canvas id="salesBarChart"></canvas>
         </div>
-
         <div class="chart-box">
           <h3>Top Products</h3>
           <canvas id="productPieChart"></canvas>
@@ -284,20 +141,17 @@
                 <th>Total</th>
               </tr>
             </thead>
-            <tbody>
-              <tr><td>2025-08-14</td><td>John Doe</td><td>R 150.00</td></tr>
-              <tr><td>2025-08-13</td><td>Jane Smith</td><td>R 85.00</td></tr>
-              <tr><td>2025-08-13</td><td>Mike Brown</td><td>R 60.00</td></tr>
+            <tbody id="recent-sales-body">
+              <!-- dynamically populated -->
             </tbody>
           </table>
         </div>
 
         <div class="alerts">
           <h3>Notifications</h3>
-          <p>No new alerts</p>
+          <p id="notifications">No new alerts</p>
         </div>
       </div>
-
     </section>
   </main>
 
@@ -322,73 +176,87 @@
     setInterval(updateDateTime, 1000);
     updateDateTime();
 
-    // ===== SAMPLE SALES DATA =====
-    const salesDataSets = {
-      week: {
-        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-        data: [1200, 1900, 3000, 2500, 2200, 2700, 3100]
-      },
-      month: {
-        labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
-        data: [10500, 9800, 11200, 12400]
-      },
-      year: {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul',
-                 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-        data: [85000, 90000, 95000, 88000, 99000, 105000,
-               110000, 102000, 97000, 112000, 115000, 120000]
-      }
-    };
+    // ===== FETCH SALES AND PRODUCTS =====
+    async function fetchDashboardData() {
+      try {
+        const salesRes = await fetch('/api/pos/sales/');
+        const salesData = await salesRes.json();
 
-    // ===== INIT BAR CHART =====
-    const barCtx = document.getElementById('salesBarChart').getContext('2d');
-    const salesBarChart = new Chart(barCtx, {
-      type: 'bar',
-      data: {
-        labels: salesDataSets.week.labels,
-        datasets: [{
-          label: 'Sales (R)',
-          data: salesDataSets.week.data,
-          backgroundColor: '#4e73df'
-        }]
-      },
-      options: {
-        responsive: true,
-        plugins: { legend: { display: false } },
-        scales: {
-          y: {
-            beginAtZero: true,
-            ticks: {
-              callback: function (value) {
-                return 'R' + value.toLocaleString();
-              }
-            }
+        const productsRes = await fetch('/products/api/products/');
+        const productsData = await productsRes.json();
+        const products = productsData; // array of products
+
+        // ===== Info Boxes =====
+        let totalSales = 0;
+        let totalStock = 0;
+        let lowStock = 0;
+        let productSalesMap = {};
+
+        salesData.forEach(sale => {
+          totalSales += parseFloat(sale.total);
+          sale.items.forEach(item => {
+            if (!productSalesMap[item.product_name]) productSalesMap[item.product_name] = 0;
+            productSalesMap[item.product_name] += item.quantity;
+          });
+        });
+
+        products.forEach(product => {
+          totalStock += parseInt(product.stock);
+          if (parseInt(product.stock) <= 5) lowStock += 1;
+        });
+
+        const mostSoldProduct = Object.keys(productSalesMap).reduce((a, b) => productSalesMap[a] > productSalesMap[b] ? a : b, "-");
+
+        document.getElementById('total-sales').textContent = `R ${totalSales.toFixed(2)}`;
+        document.getElementById('total-stock').textContent = `${totalStock} items`;
+        document.getElementById('low-stock').textContent = `${lowStock} items`;
+        document.getElementById('most-sold').textContent = mostSoldProduct;
+
+        // ===== Recent Sales Table =====
+        const recentSalesBody = document.getElementById('recent-sales-body');
+        recentSalesBody.innerHTML = '';
+        salesData.slice().reverse().forEach(sale => {
+          const row = document.createElement('tr');
+          const date = new Date(sale.date).toLocaleString();
+          row.innerHTML = `<td>${date}</td><td>${sale.cashier_name}</td><td>R ${parseFloat(sale.total).toFixed(2)}</td>`;
+          recentSalesBody.appendChild(row);
+        });
+
+        // ===== Sales Over Time Chart =====
+        const barCtx = document.getElementById('salesBarChart').getContext('2d');
+        const salesBarChart = new Chart(barCtx, {
+          type: 'bar',
+          data: {
+            labels: salesData.map(s => new Date(s.date).toLocaleDateString()),
+            datasets: [{
+              label: 'Sales (R)',
+              data: salesData.map(s => parseFloat(s.total)),
+              backgroundColor: '#4e73df'
+            }]
+          },
+          options: {
+            responsive: true,
+            plugins: { legend: { display: false } },
+            scales: { y: { beginAtZero: true, ticks: { callback: v => 'R'+v.toLocaleString() } } }
           }
-        }
-      }
-    });
+        });
 
-    // ===== FILTER HANDLER =====
-    document.getElementById('sales-filter').addEventListener('change', function () {
-      const selected = this.value;
-      salesBarChart.data.labels = salesDataSets[selected].labels;
-      salesBarChart.data.datasets[0].data = salesDataSets[selected].data;
-      salesBarChart.update();
-    });
+        // ===== Product Pie Chart =====
+        const pieCtx = document.getElementById('productPieChart').getContext('2d');
+        new Chart(pieCtx, {
+          type: 'pie',
+          data: {
+            labels: Object.keys(productSalesMap),
+            datasets: [{ data: Object.values(productSalesMap), backgroundColor: ['#4e73df','#1cc88a','#36b9cc','#f6c23e','#e74a3b','#ff6f61'] }]
+          }
+        });
 
-    // ===== PRODUCT PIE CHART =====
-    const pieCtx = document.getElementById('productPieChart').getContext('2d');
-    new Chart(pieCtx, {
-      type: 'pie',
-      data: {
-        labels: ['Product A', 'Product B', 'Product C', 'Product D'],
-        datasets: [{
-          data: [45, 25, 20, 10],
-          backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc', '#f6c23e']
-        }]
+      } catch (error) {
+        console.error(error);
       }
-    });
+    }
+
+    fetchDashboardData();
   </script>
-
 </body>
 </html>

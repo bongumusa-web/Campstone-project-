@@ -1,23 +1,39 @@
-from rest_framework import viewsets
-from .models import Category, Product, Supplier, SupplierStock
-from .serializers import CategorySerializer, ProductSerializer, SupplierSerializer, SupplierStockSerializer
+# supplier/views.py
 from django.shortcuts import render
+from rest_framework import viewsets, filters
+from .models import Supplier, SupplierProduct
+from .serializers import SupplierSerializer, SupplierProductSerializer
+from rest_framework.permissions import AllowAny
+from rest_framework.response import Response
 
+# Template views
 def supplier_page(request):
     return render(request, 'supplier/supplier.html')
 
-class CategoryViewSet(viewsets.ModelViewSet):
-    queryset = Category.objects.all()
-    serializer_class = CategorySerializer
+def add_supplier_page(request):
+    return render(request, 'supplier/add_supplier.html')
 
-class ProductViewSet(viewsets.ModelViewSet):
-    queryset = Product.objects.all()
-    serializer_class = ProductSerializer
+def add_supplier_product_page(request):
+    return render(request, 'supplier/add_supplier_product.html')
 
+# API
 class SupplierViewSet(viewsets.ModelViewSet):
     queryset = Supplier.objects.all()
     serializer_class = SupplierSerializer
+    permission_classes = [AllowAny]
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['name']
 
-class SupplierStockViewSet(viewsets.ModelViewSet):
-    queryset = SupplierStock.objects.all()
-    serializer_class = SupplierStockSerializer
+class SupplierProductViewSet(viewsets.ModelViewSet):
+    queryset = SupplierProduct.objects.all()
+    serializer_class = SupplierProductSerializer
+    permission_classes = [AllowAny]
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['product_name']
+    
+
+class CategoryViewSet(viewsets.ViewSet):
+    categories = ['Consumable', 'Mass Product', 'Quantity Product', 'Normal Product']
+    def list(self, request):
+        return Response([{"name": c} for c in self.categories])
+
