@@ -165,7 +165,7 @@ Access the app at:
 
 For detailed system design, database schema, and extended API usage examples:
 
-[📘 View Full Documentation on Google Docs](https://docs.google.com/document/d/YOUR_DOC_ID_HERE)
+[📘 View Full Documentation on Google Docs](https://docs.google.com/document/d/1qnreRTBMn6BPtO4U4MOZqOW2M2toNhR46DgxaTCypt4/edit?usp=sharing)
 
 ---
 
