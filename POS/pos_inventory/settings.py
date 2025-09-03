@@ -5,8 +5,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-demo-key')
-DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
-ALLOWED_HOSTS = ['*']  # use specific hostnames for production
+
+# Always set DEBUG = False in production
+DEBUG = os.environ.get('DJANGO_DEBUG', 'False') == 'True'
+
+# Replace with your actual PythonAnywhere domain
+ALLOWED_HOSTS = ['yourusername.pythonanywhere.com']
 
 # Application definition
 INSTALLED_APPS = [
@@ -54,7 +58,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'pos_inventory.wsgi.application'
 
-# Database (SQLite, safe for demo)
+# Database (SQLite for now, but consider PostgreSQL for production)
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -89,6 +93,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Session and login
-SESSION_COOKIE_SECURE = False  # for demo/testing
+SESSION_COOKIE_SECURE = True   # secure cookies in production
+CSRF_COOKIE_SECURE = True
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 LOGIN_URL = '/login/'
