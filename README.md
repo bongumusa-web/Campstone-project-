@@ -91,7 +91,7 @@ python manage.py runserver
 ```
 
 Access the app at:
-👉 [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
+👉 :  https://musa1.pythonanywhere.com/login/
 
 ---
 
@@ -182,7 +182,7 @@ For detailed system design, database schema, and extended API usage examples:
 
 **Ztkings**
 💼 Django Developer | 💡 POS & Inventory Systems
-
+ see the app here :https://musa1.pythonanywhere.com/login/
 ---
 
 
