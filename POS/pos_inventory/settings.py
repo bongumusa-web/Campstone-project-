@@ -6,11 +6,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-demo-key')
 
-# Always set DEBUG = False in production
+# Debug mode (default False in production)
 DEBUG = os.environ.get('DJANGO_DEBUG', 'False') == 'True'
 
-# Replace with your actual PythonAnywhere domain
-ALLOWED_HOSTS = ['yourusername.pythonanywhere.com']
+# Allowed hosts
+ALLOWED_HOSTS = [
+    'Musa1.pythonanywhere.com',  #  domain
+    '127.0.0.1',  # local dev
+    'localhost',  # local dev
+]
 
 # Application definition
 INSTALLED_APPS = [
@@ -58,13 +62,26 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'pos_inventory.wsgi.application'
 
-# Database (SQLite for now, but consider PostgreSQL for production)
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+# Database
+if 'PYTHONANYWHERE_DOMAIN' in os.environ:
+    #  Use MySQL on PythonAnywhere
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'Musa1$default',  # change Musa1 to your PythonAnywhere username
+            'USER': 'Musa1',          # same here
+            'PASSWORD': os.environ.get('DB_PASSWORD', ''),  # set in Web → Environment variables
+            'HOST': 'Musa1.mysql.pythonanywhere-services.com',
+        }
     }
-}
+else:
+    # Use SQLite locally
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -93,7 +110,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Session and login
-SESSION_COOKIE_SECURE = True   # secure cookies in production
-CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = not DEBUG   # secure cookies only in production
+CSRF_COOKIE_SECURE = not DEBUG
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 LOGIN_URL = '/login/'
