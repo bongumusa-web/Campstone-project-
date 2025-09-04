@@ -1,4 +1,5 @@
 // Simple JS to add product to cart
+
 document.addEventListener("DOMContentLoaded", () => {
   const products = document.querySelectorAll(".product-box");
   const receiptBody = document.getElementById("receipt-body");

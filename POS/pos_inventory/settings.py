@@ -4,17 +4,13 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-demo-key')
+SECRET_KEY = 'django-insecure-demo-key'  # local dev only
 
-# Debug mode (default False in production)
-DEBUG = os.environ.get('DJANGO_DEBUG', 'False') == 'True'
+# Debug mode
+DEBUG = True
 
 # Allowed hosts
-ALLOWED_HOSTS = [
-    'Musa1.pythonanywhere.com',  #  domain
-    '127.0.0.1',  # local dev
-    'localhost',  # local dev
-]
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 # Application definition
 INSTALLED_APPS = [
@@ -62,26 +58,13 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'pos_inventory.wsgi.application'
 
-# Database
-if 'PYTHONANYWHERE_DOMAIN' in os.environ:
-    #  Use MySQL on PythonAnywhere
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'Musa1$default',  # change Musa1 to your PythonAnywhere username
-            'USER': 'Musa1',          # same here
-            'PASSWORD': os.environ.get('DB_PASSWORD', ''),  # set in Web → Environment variables
-            'HOST': 'Musa1.mysql.pythonanywhere-services.com',
-        }
+# Database (SQLite only)
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
-else:
-    # Use SQLite locally
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
+}
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -99,18 +82,22 @@ USE_TZ = True
 
 # Static files
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / "static"]       # dev static files
-STATIC_ROOT = BASE_DIR / "staticfiles"        # collected static for deployment
 
-# Media files (images, uploads)
+# Folder for static files for development
+STATICFILES_DIRS = [BASE_DIR / "static"]
+
+# Folder where collectstatic would put files (still needed for collectstatic)
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
+# Media files
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Session and login
-SESSION_COOKIE_SECURE = not DEBUG   # secure cookies only in production
-CSRF_COOKIE_SECURE = not DEBUG
+# Sessions / login
+SESSION_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE = False
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 LOGIN_URL = '/login/'
