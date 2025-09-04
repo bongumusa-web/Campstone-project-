@@ -91,7 +91,7 @@ python manage.py runserver
 ```
 
 Access the app at:
-👉 :  https://musa1.pythonanywhere.com/login/
+👉 :  http://127.0.0.1:8000/login/
 
 ---
 
